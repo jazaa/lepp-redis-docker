@@ -1,0 +1,33 @@
+version: '3.7'
+services:
+
+  nginx:
+    build: ./nginx
+    volumes:
+      - ./nginx/http.conf:/etc/nginx/sites-enabled/http.conf
+      - ./nginx/site.conf:/etc/nginx/sites-enabled/site.conf
+      - ../../:/src/
+    command: 'nginx -g "daemon off;"'
+    network_mode: "host"
+
+  php:
+    build: ./php
+    volumes:
+      - ../../:/src/
+      - ./php/php-cli.ini:/etc/php/7.2/cli/conf.d/php-cli.ini
+      - ./php/php-fpm.ini:/etc/php/7.2/fpm/conf.d/php-fpm.ini
+      - ./php/pool.conf:/etc/php/7.2/fpm/pool.d/www.conf
+    command: 'php-fpm7.2 -F'
+    network_mode: "host"
+
+  redis:
+    build: ./redis
+    network_mode: "host"    
+    
+  db:
+    build: ./postgres
+    network_mode: "host"
+    volumes:
+      - ../../:/src/
+    ports:
+      - 5432:5433
