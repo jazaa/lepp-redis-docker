@@ -8,7 +8,8 @@ services:
       - ./nginx/site.conf:/etc/nginx/sites-enabled/site.conf
       - ../../:/src/
     command: 'nginx -g "daemon off;"'
-    network_mode: "host"
+    ports:
+      - 80:80
 
   php:
     build: ./php
@@ -21,13 +22,14 @@ services:
     network_mode: "host"
 
   redis:
-    build: ./redis
-    network_mode: "host"    
+    build: ./redis 
     
   db:
     build: ./postgres
-    network_mode: "host"
     volumes:
+      - ./postgres/pg_hba.conf:/var/lib/postgresql/data/pg_hba.conf
       - ../../:/src/
     ports:
-      - 5432:5433
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: pass

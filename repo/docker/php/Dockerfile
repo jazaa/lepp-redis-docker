@@ -1,16 +1,18 @@
 FROM ubuntu:16.04
 
+EXPOSE 9000
+
 ENV PACKAGES   \
     php7.2         \   
-    php7.2-cli     \  
-    php7.2-common  \ 
-    php7.2-curl    \ 
-    php7.2-dev     \ 
-    php7.2-fpm     \ 
-    php7.2-gd      \ 
-    php7.2-json    \ 
+    php7.2-cli     \
+    php7.2-common  \
+    php7.2-curl    \
+    php7.2-dev     \
+    php7.2-fpm     \
+    php7.2-gd      \
+    php7.2-json    \
     php7.2-mbstring \
-    php7.2-opcache  \ 
+    php7.2-opcache  \
     php7.2-pgsql    \
     php7.2-readline \
     php7.2-soap     \
@@ -39,7 +41,7 @@ RUN export TERM=linux && \
 	apt install -y software-properties-common language-pack-en && \
     export LC_ALL=en_US.UTF-8 && \
     export LANG=en_US.UTF-8
-    
+
 RUN export TERM=linux && \
 	LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php && \
     apt update && \
